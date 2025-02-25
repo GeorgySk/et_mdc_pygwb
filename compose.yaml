@@ -1,0 +1,35 @@
+services:
+  rucio-client:
+    image: ghcr.io/vre-hub/vre-rucio-client
+    container_name: rucio-client
+    user: root
+    environment:
+      - RUCIO_CFG_CLIENT_X509_PROXY=/tmp/x509up
+      - RUCIO_CFG_AUTH_TYPE=x509_proxy
+    volumes:
+      - ${CERTIFICATES_PATH}/usercert.pem:/opt/rucio/etc/client.crt
+      - ${CERTIFICATES_PATH}/userkey.pem:/opt/rucio/etc/client.key
+      - ${REANA_CONFIG_PATH}:/home/user/reana.yaml
+      - ${PYGWB_PARAMETERS_PATH}:/home/user/parameters.ini
+      - ${SNAKEFILE_PATH}:/home/user/Snakefile
+      - ${SNAKEMAKE_CONFIG_PATH}:/home/user/config.yaml
+    entrypoint: ["/bin/sh","-c"]
+    command:
+    - |
+       voms-proxy-init --voms escape --cert /opt/rucio/etc/client.crt --key /opt/rucio/etc/client.key --out /tmp/x509up
+       export REANA_SERVER_URL=https://reana-vre.cern.ch
+       export REANA_ACCESS_TOKEN=${REANA_ACCESS_TOKEN}
+       reana-client secrets-add --env VONAME=escape \
+                                --env VOMSPROXY_FILE=x509up \
+                                --file /tmp/x509up \
+                                --env RUCIO_USERNAME=${ESCAPE_USERNAME} \
+                                --env RUCIO_RUCIO_HOST=https://vre-rucio.cern.ch \
+                                --env RUCIO_AUTH_HOST=https://vre-rucio-auth.cern.ch \
+                                --overwrite
+       reana-client create -w ${WORKFLOW_NAME}
+       export REANA_WORKON=${WORKFLOW_NAME}
+       reana-client upload
+       reana-client start
+       while true; do reana-client status; sleep 2; done
+    stdin_open: true
+    tty: true

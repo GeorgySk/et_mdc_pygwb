@@ -1,0 +1,45 @@
+first_timestamp: 1002641920
+last_timestamp: 1002648064
+channels: ['E1', 'E2']
+
+alpha: 0.666666
+fref: null  # reference frequency passed to `pygwb_combine`
+
+duration: 2048
+output_path: 'output'  # for `pygwb_combine`
+parameters_path: 'parameters.ini'
+scope: 'ET_OSB_MDC1'
+
+pygwb_container: 'docker://docker.io/georgysk/pygwb'
+rucio_client_container: 'docker://ghcr.io/vre-hub/vre-rucio-client:latest'
+
+final_estimate_template: "point_estimate_sigma_spectra_alpha_{alpha:.1f}\
+  _fref_{fref}_{first_timestamp}-{last_timestamp}.npz"
+estimate_file_template: 'point_estimate_sigma_{t0}-{tf}.npz'
+gwf_template: 'E-{{channel}}_STRAIN_DATA-{{t0}}-{duration}.gwf'
+
+# For `pygwb_pipe`
+apply_dsc: true
+pickle_out: false
+wipe_ifo: true
+calc_pt_est: true
+
+pygwb_combine_template: >-
+  pygwb_combine
+  --param_file {parameters_path}
+  --alpha {alpha}
+  --data_path .
+  --out_path {output_path}
+
+pygwb_pipe_template: >-
+  pygwb_pipe
+  --apply_dsc {apply_dsc}
+  --param_file {parameters_path}
+  --pickle_out {pickle_out}
+  --wipe_ifo {wipe_ifo}
+  --calc_pt_est {calc_pt_est}
+  --t0 {{t0}}
+  --tf {{tf}}
+  --interferometer_list {channels[0]} {channels[1]}
+  --local_data_path
+  {channels[0]}:{{gwf_paths[0]}},{channels[1]}:{{gwf_paths[1]}}
