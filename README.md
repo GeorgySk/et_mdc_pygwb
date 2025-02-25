@@ -15,8 +15,8 @@ Open the attached .env file and fill in the required data:
 - `WORKFLOW_NAME` -- any name for a workflow; will be displayed on the Reana dashboard: https://reana-vre.cern.ch/.
 
 ## Execution
-1. `cd` to the directory with the _docker-compose.yml_ and _.env_ files (both files are attached).
-2. Run `docker-compose up`.  
+1. `cd` to the directory with the _compose.yaml_ and _.env_ files (both files are attached).
+2. Run `docker compose up`.  
 Docker will now:
 - pull the image with the Rucio client (only the first time);
 - launch a container from this image;
@@ -29,8 +29,8 @@ Docker will now:
 - start the workflow;
 - print the status of the workflow in the terminal every 2 seconds.  
 
-Right now, the status will get printed forever so you would have to forcefully shut down the container by pressing <kbd>CtrlC</kbd>+<kbd>C</kbd> several times. I might change this behaviour later.  
-If everything was done correctly, the workflow should finish correctly in some time and you would see something like this in the Reana dashboard:  
+Right now, the status will get printed forever so you would have to forcefully shut down the container by pressing <kbd>Ctrl</kbd>+<kbd>C</kbd> several times. I might change this behaviour later.  
+If everything was done correctly, the workflow should finish correctly in some time, and you would see something like this in the Reana dashboard:  
 ![image](https://user-images.githubusercontent.com/20144534/285870654-acb1c313-9741-46ff-8a74-88e1b4c83015.png)
 
 ### Selecting MDC data
