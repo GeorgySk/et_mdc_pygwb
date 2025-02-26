@@ -17,7 +17,7 @@ gwf_template = config['gwf_template'].format(duration=config['duration'])
 gwf_path_template = gwf_template
 rucio_gwf_path_template = f"{config['scope']}:{gwf_template}"
 # rucio_get_template = f"rucio get {rucio_gwf_path_template}"
-rucio_get_template = f"wget http://et-origin.cism.ucl.ac.be/MDC1/data/{{channel}}/{gwf_template}"
+rucio_get_template = f"wget http://et-origin.cism.ucl.ac.be/MDC1/v2/data/{{channel}}/{gwf_template}"
 
 rule all:
     input: final_estimate_filepath

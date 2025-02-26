@@ -50,13 +50,13 @@ You might want to see which data is present on Rucio. For this, the easiest way 
 ```bash
 rucio list-dids --filter 'type=file' ET_OSB_MDC1:*_STRAIN_DATA-*
 ```
-to get the list of the files. Note that these files are not in sync with the ones found on the HTTP web server -- http://et-origin.cism.ucl.ac.be/.  
+to get the list of the files. Note that these files are not in sync with the ones found on the HTTP web server -- http://et-origin.cism.ucl.ac.be/MDC1/v2/.  
 
 ---
 
 #### Links
 - MDC page on ET wiki: https://wiki.et-gw.eu/OSB/DataAnalysisPlatform/MDC
-- Access to ET MDC data using HTTP web server: http://et-origin.cism.ucl.ac.be/
+- Access to ET MDC data using HTTP web server: http://et-origin.cism.ucl.ac.be/MDC1/v2/data/
 - Pygwb documentation: https://pygwb.docs.ligo.org/pygwb/index.html
 - Snakemake documentation: https://snakemake.readthedocs.io/
 - VRE page: https://vre-hub.github.io/
