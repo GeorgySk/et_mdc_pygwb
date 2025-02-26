@@ -1,4 +1,6 @@
-# How to run a parallel pygwb pipeline on Reana cluster with ET MDC data
+# How to run a parallel pygwb pipeline on the VRE-Reana cluster with ET MDC data
+
+The scripts on this repository are configured to run on the Reana VRE instance. However, the pipeline can be run on any Reana instance by adapting the reana credentials.
 
 ## Setup
 For setting up the certificates and the accounts, see [How to run a serial pygwb pipeline on Reana cluster with ET MDC data](https://gist.github.com/GeorgySk/5cd862712d5e4d3d3cdb24275b02c877).
